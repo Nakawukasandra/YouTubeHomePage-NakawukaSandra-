@@ -26,16 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Replacing upper logo with the clear YouTube logo
-            //Padding(
-              //padding: const EdgeInsets.all(8.0),
-              //child: Image.asset(
-               // 'assets/images/youtube.png', // Path to the clear YouTube logo
-               // width: 120, // Adjust size as needed
-               // height: 50,
-             // ),
-           // ),
-            
             // Categories section
             SizedBox(
               height: 50,
@@ -53,7 +43,6 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 35, // Keep the same width
                           height: 35, // Keep the same height
                         ),
-                        // Removed the Text widget to prevent overflow
                       ],
                     ),
                   ),
@@ -67,24 +56,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
-            const Divider(),
+            const Divider(color: Colors.grey), // Light divider for contrast
 
             // Video list and shorts section mixed together
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 "Videos",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
               ),
             ),
             ListView.builder(
-              shrinkWrap: true,  // Ensures the ListView doesn't take full screen height
-              physics: const NeverScrollableScrollPhysics(),  // Prevents nested scrolling issues
-              itemCount: 12,  // 6 videos + 6 shorts (adjust the number as needed)
+              shrinkWrap: true, // Ensures the ListView doesn't take full screen height
+              physics: const NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
+              itemCount: 12, // 6 videos + 6 shorts (adjust the number as needed)
               itemBuilder: (context, index) {
-                // Display videos before and after the shorts
                 if (index == 3) {
-                  // Insert shorts section after 3 videos
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -92,39 +79,38 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.all(8.0),
                         child: Text(
                           "Shorts",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
                         ),
                       ),
                       GridView.builder(
-                        shrinkWrap: true,  // Ensures the grid doesn't take full screen height
-                        physics: const NeverScrollableScrollPhysics(),  // Prevents nested scrolling issues
+                        shrinkWrap: true, // Ensures the grid doesn't take full screen height
+                        physics: const NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
                         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3,  // 3 columns for shorts grid
+                          crossAxisCount: 3, // 3 columns for shorts grid
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
-                          childAspectRatio: 9 / 16,  // Vertical video aspect ratio
+                          childAspectRatio: 9 / 16, // Vertical video aspect ratio
                         ),
-                        itemCount: 6,  // Example short video count
+                        itemCount: 6, // Example short video count
                         itemBuilder: (context, shortIndex) {
                           return Container(
-                            color: const Color.fromARGB(255, 214, 213, 213),
+                            color: Colors.grey[900], // Dark grey for shorts background
                             child: Center(
                               child: Text(
                                 "Short ${shortIndex + 1}",
-                                style: const TextStyle(color: Colors.black),
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
                           );
                         },
                       ),
-                      const Divider(),
+                      const Divider(color: Colors.grey),
                     ],
                   );
                 } else {
-                  // Continue showing video cards
                   return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0),  // Adds vertical spacing between items
-                    child: VideoCard(),  // Replace with your video card widget
+                    padding: EdgeInsets.symmetric(vertical: 8.0), // Adds vertical spacing between items
+                    child: VideoCard(), // Replace with your video card widget
                   );
                 }
               },
@@ -133,9 +119,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.white,  // Background color set to white for better contrast
-        unselectedItemColor: Colors.black,  // Black color for unselected icons
-        selectedItemColor: Colors.black,  // Black color for selected icons
+        backgroundColor: const Color(0xFF212121), // Dark background
+        unselectedItemColor: Colors.grey, // Grey for unselected icons and labels
+        selectedItemColor: Colors.grey, // Grey for selected icon and label
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
@@ -160,20 +146,21 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'You',
           ),
         ],
+        selectedLabelStyle: const TextStyle(color: Colors.grey), // Grey for selected text
+        unselectedLabelStyle: const TextStyle(color: Colors.grey), // Grey for unselected text
       ),
     );
   }
 
-  // Modified _buildCategoryChip to support different backgrounds
   Widget _buildCategoryChip(String label, [bool isAll = false]) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: Chip(
         label: Text(
           label,
-          style: TextStyle(color: isAll ? Colors.white : Colors.black),
+          style: TextStyle(color: isAll ? Colors.black : Colors.white), // White text on dark background
         ),
-        backgroundColor: isAll ? Colors.black : const Color.fromARGB(255, 248, 245, 245),
+        backgroundColor: isAll ? Colors.white : Colors.grey[800], // Dark background for chips
       ),
     );
   }
