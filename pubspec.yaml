@@ -27,6 +27,16 @@ flutter:
   assets:
     - assets/images/youtube.png
     - assets/images/explore.png
+    - assets/images/gospel.jpg
+    - assets/images/phaneroo.jpg
+    - assets/images/news.jpg
+    - assets/images/short_logo.png
+    - assets/images/mickey.jpg
+    - assets/images/movie.jpg
+    - assets/images/sand.jpg
+    - assets/images/hill.jpeg
+    - assets/images/mad.jpg
+    - assets/images/soft.jpg
   
   # An image asset can refer to one or more resolution-specific "variants".
   # For details regarding adding assets from package dependencies,

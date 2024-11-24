@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import '../widgets/app_bar.dart'; // Assuming you have a custom app bar
-import '../widgets/video_card.dart'; // Assuming you have a custom video card
+import '../widgets/video_card.dart'; // Updated VideoCard with dynamic fields
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  // ignore: library_private_types_in_public_api
   _HomeScreenState createState() => _HomeScreenState();
 }
 
@@ -21,84 +22,177 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(), // Use your custom app bar
+      backgroundColor: Colors.black,
+      appBar: buildAppBar(),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Categories section
-            SizedBox(
-              height: 50,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  // Explore Icon placed in front of "All"
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          'assets/images/explore.png', // New explore icon
-                          width: 35, // Keep the same width
-                          height: 35, // Keep the same height
-                        ),
-                      ],
+            // Category section
+            Container(
+              color: Colors.grey[900],
+              child: SizedBox(
+                height: 50,
+                child: ListView(
+                  scrollDirection: Axis.horizontal,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            'assets/images/explore.png',
+                            width: 35,
+                            height: 35,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  _buildCategoryChip("All", true), // All chip with black background
-                  _buildCategoryChip("Music"),
-                  _buildCategoryChip("Phaneroo"),
-                  _buildCategoryChip("News"),
-                  _buildCategoryChip("Movies"),
-                  _buildCategoryChip("Mixes"),
-                  _buildCategoryChip("Choirs"),
-                ],
+                    _buildCategoryChip("All", true),
+                    _buildCategoryChip("Music"),
+                    _buildCategoryChip("Phaneroo"),
+                    _buildCategoryChip("News"),
+                    _buildCategoryChip("Movies"),
+                    _buildCategoryChip("Mixes"),
+                    _buildCategoryChip("Choirs"),
+                  ],
+                ),
               ),
             ),
-            const Divider(color: Colors.grey), // Light divider for contrast
-
-            // Video list and shorts section mixed together
+            const Divider(color: Colors.grey),
+            // Videos section
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
                 "Videos",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
               ),
             ),
             ListView.builder(
-              shrinkWrap: true, // Ensures the ListView doesn't take full screen height
-              physics: const NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
-              itemCount: 12, // 6 videos + 6 shorts (adjust the number as needed)
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount:
+                  10, // Total items (6 videos + 1 Shorts section + 3 shorts)
               itemBuilder: (context, index) {
+                // Insert the Shorts section after 3 videos
                 if (index == 3) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text(
-                          "Shorts",
-                          style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Image.asset(
+                              'assets/images/short_logo.png', // Logo instead of text
+                              width: 80, // Adjust size as needed
+                              height: 80, // Adjust size as needed
+                              fit: BoxFit.contain, // Proportional scaling
+                            ),
+                            const SizedBox(width: 8),
+                          ],
                         ),
                       ),
                       GridView.builder(
-                        shrinkWrap: true, // Ensures the grid doesn't take full screen height
-                        physics: const NeverScrollableScrollPhysics(), // Prevents nested scrolling issues
-                        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 3, // 3 columns for shorts grid
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3, // 3 columns for shorts
                           crossAxisSpacing: 8.0,
                           mainAxisSpacing: 8.0,
-                          childAspectRatio: 9 / 16, // Vertical video aspect ratio
+                          childAspectRatio:
+                              9 / 16, // Vertical video aspect ratio
                         ),
-                        itemCount: 6, // Example short video count
+                        itemCount: 6, // Total number of shorts
                         itemBuilder: (context, shortIndex) {
-                          return Container(
-                            color: Colors.grey[900], // Dark grey for shorts background
-                            child: Center(
-                              child: Text(
-                                "Short ${shortIndex + 1}",
-                                style: const TextStyle(color: Colors.white),
+                          final List<String> shortImages = [
+                            'assets/images/mickey.jpg',
+                            'assets/images/movie.jpg',
+                            'assets/images/sand.jpg',
+                            'assets/images/hill.jpeg',
+                            'assets/images/mad.jpg',
+                            'assets/images/soft.jpg',
+                          ];
+
+                          return ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0), // Rounded corners
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.grey[900], // Placeholder color
+                              ),
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  Image.asset(
+                                    shortImages[shortIndex],
+                                    fit: BoxFit.cover, // Ensure the image fits the box
+                                  ),
+                                  // Icons positioned in a Column
+                                  // ignore: prefer_const_constructors
+                                  Positioned(
+                                    top: 8.0,
+                                    right: 8.0,
+                                    // ignore: prefer_const_constructors
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.end,
+                                      // ignore: prefer_const_literals_to_create_immutables
+                                      children: [
+                                        // Like icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.thumb_up,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // Unlike icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.thumb_down,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // Message icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.chat_bubble_outline,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // Share icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.share,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // Remix icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.loop, // Remix icon
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                        const SizedBox(height: 10),
+                                        // Person icon
+                                        // ignore: prefer_const_constructors
+                                        Icon(
+                                          Icons.person_add,
+                                          color: Colors.white,
+                                          size: 30.0,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           );
@@ -107,10 +201,42 @@ class _HomeScreenState extends State<HomeScreen> {
                       const Divider(color: Colors.grey),
                     ],
                   );
-                } else {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8.0), // Adds vertical spacing between items
-                    child: VideoCard(), // Replace with your video card widget
+                }
+
+                // Regular videos
+                else {
+                  // Choose the correct thumbnail and title based on index
+                  String imagePath;
+                  String title;
+                  String channelInfo;
+
+                  if (index == 0) {
+                    imagePath = 'assets/images/gospel.jpg';
+                    title =
+                        'Way Maker, Jesus, You are Beautiful || Amazing Gospel Songs Playlist';
+                    channelInfo =
+                        'Gospel Channel • 21.7k views • 3 days ago . 500 Likes';
+                  } else if (index == 2) {
+                    imagePath = 'assets/images/news.jpg'; // Third thumbnail
+                    title =
+                        'Breaking News: World Events You Need to Know About!';
+                    channelInfo =
+                        'News Network • 1M views • 2 days ago • 2k Likes';
+                  } else {
+                    imagePath = 'assets/images/phaneroo.jpg';
+                    title =
+                        'Wisdom and Revelation In The Knowledge Of Christ | Phaneroo Sunday';
+                    channelInfo =
+                        'Phaneroo Channel • 500K views • 5 days ago . 1.09k Likes';
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8.0),
+                    child: VideoCard(
+                      imagePath: imagePath,
+                      title: title,
+                      channelInfo: channelInfo,
+                    ),
                   );
                 }
               },
@@ -119,9 +245,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: const Color(0xFF212121), // Dark background
-        unselectedItemColor: Colors.grey, // Grey for unselected icons and labels
-        selectedItemColor: Colors.grey, // Grey for selected icon and label
+        backgroundColor: const Color(0xFF212121),
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.grey,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         items: const [
@@ -146,8 +272,6 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'You',
           ),
         ],
-        selectedLabelStyle: const TextStyle(color: Colors.grey), // Grey for selected text
-        unselectedLabelStyle: const TextStyle(color: Colors.grey), // Grey for unselected text
       ),
     );
   }
@@ -158,9 +282,9 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Chip(
         label: Text(
           label,
-          style: TextStyle(color: isAll ? Colors.black : Colors.white), // White text on dark background
+          style: TextStyle(color: isAll ? Colors.black : Colors.white),
         ),
-        backgroundColor: isAll ? Colors.white : Colors.grey[800], // Dark background for chips
+        backgroundColor: isAll ? Colors.white : Colors.grey[800],
       ),
     );
   }
