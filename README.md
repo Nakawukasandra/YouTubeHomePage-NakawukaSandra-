@@ -1,3 +1,6 @@
+![day 19 outcome](https://github.com/user-attachments/assets/647f5393-d40b-4bb2-bace-aeb5afe47fa8)
+![day 18 outcome](https://github.com/user-attachments/assets/04169e81-1f65-4005-92d6-e945cbfc2868)
+![day 17 out come](https://github.com/user-attachments/assets/2401e4a9-ba66-4dbd-894f-caa4d5996686)
 ![Capture image 2](https://github.com/user-attachments/assets/77cee2fb-833a-4aa5-86ad-0e49c89a39a8)
 ![capture image1](https://github.com/user-attachments/assets/ed30efae-9f3c-44e4-b0b3-047774f1d508)
 # youtube_homepage
